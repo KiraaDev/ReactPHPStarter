@@ -1,12 +1,12 @@
-
+import { RouterProvider } from "react-router";
+import { router } from "./router";
 
 function App() {
-  
   return (
     <>
-     <h1 className="text-3xl">React + PHP </h1>
+      <RouterProvider router={router} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
