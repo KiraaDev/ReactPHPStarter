@@ -40,7 +40,7 @@ class AuthController
         if ($result->num_rows <= 0) {
             response([
                 'status' => 'failed',
-                'message' => 'user not found'
+                'message' => 'Invalid credentials'
             ], 404);
         }
 
@@ -49,7 +49,7 @@ class AuthController
         if (!comparePassword($row['password'], $password)) {
             response([
                 'status' => 'failed',
-                'message' => 'invalid credentials'
+                'message' => 'Invalid credentials'
             ], 401);
         }
 
