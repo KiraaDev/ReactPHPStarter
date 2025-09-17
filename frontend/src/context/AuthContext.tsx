@@ -10,6 +10,7 @@ type AuthContextProps = {
 const AuthContext = createContext<AuthContextProps | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const login = async (email: string, password: string) => {
