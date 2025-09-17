@@ -5,7 +5,7 @@ class Db {
     private $host = "localhost";
     private $user = "test";
     private $password = "";
-    private $db_name = "oms";
+    private $db_name = "BarangaySystem";
 
     public function __construct() {
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
