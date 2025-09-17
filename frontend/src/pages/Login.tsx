@@ -1,15 +1,27 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router";
 
 export default function Login() {
-  const { login, errorMessage } = useAuth();
+  const navigate = useNavigate();
+  const { login, errorMessage, user } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    login(email, password);
+    await login(email, password);
+
+    if (!errorMessage && user) {
+      if (user.role === "Admin") {
+        navigate("/admin/dashboard");
+      } else if (user.role === "Official") {
+        navigate("/official/dashboard");
+      } else {
+        navigate("/resident/home");
+      }
+    }
   };
 
   return (
