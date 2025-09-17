@@ -1,5 +1,4 @@
 <?php
-session_name("ReactPHPStarter");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     header("Access-Control-Allow-Origin: http://localhost:5173");
