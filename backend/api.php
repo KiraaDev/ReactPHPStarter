@@ -33,6 +33,11 @@ switch ($action) {
         $auth_controller->register();
         break;
 
+    case "logout":
+        require_method("POST");
+        $auth_controller->logout();
+        break;
+
     default:
         response(["error" => "Invalid action"], 404);
 }
