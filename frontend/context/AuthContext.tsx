@@ -13,7 +13,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const login = async (email: string, password: string) => {
+
     setErrorMessage(null);
+    
+    if (!email || !password) {
+      return setErrorMessage("Email and Password are required");
+    }
 
     try {
       const response = await axios.post(
