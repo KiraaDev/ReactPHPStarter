@@ -53,24 +53,30 @@ class AuthController
             ], 404);
         }
 
-        $row = $result->fetch_assoc();
+        $user = $result->fetch_assoc();
 
-        if (!comparePassword($row['password'], $password)) {
+        if (!comparePassword($user['password'], $password)) {
             response([
                 'status' => 'failed',
                 'message' => 'Invalid credentials'
             ], 401);
         }
 
-        $_SESSION['user_id'] = $row['user_id'];
-        $_SESSION['email'] = $row['email'];
-        $_SESSION['role'] = $row['role'] ?? 'customer';
+        $_SESSION['user_id'] = $user['user_id'];
+        $_SESSION['email'] = $user['email'];
+        $_SESSION['role'] = $user['role'] ?? 'customer';
 
         session_regenerate_id(true);
 
         response([
             'status' => 'success',
-            'message' => 'Login successful'
+            'message' => 'Login successful',
+            'user' => [
+                'user_id' => $user['user_id'],
+                'resident_id' => $user['resident_id'],
+                'email' => $user['email'],
+                'role' => $user['role']
+            ],
         ]);
     }
 
@@ -79,6 +85,35 @@ class AuthController
         response([
             'status' => 'success',
             'message' => 'Registering user...'
+        ]);
+    }
+
+    public function logout()
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $_SESSION = [];
+
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
+            );
+        }
+
+        session_destroy();
+
+        response([
+            'status' => 'success',
+            'message' => 'Logout successful'
         ]);
     }
 }
