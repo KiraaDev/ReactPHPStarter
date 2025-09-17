@@ -30,8 +30,17 @@ class AuthController
         }
     }
 
-    public function login($email = "gaufogomer@gmail.com", $password = "123123")
+    public function login()
     {
+
+        $json = file_get_contents("php://input");
+
+        $data = json_decode($json, true);
+
+        $email = $data['email'] ?? null;
+        $password = $data['password'] ?? null;
+
+
         $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
